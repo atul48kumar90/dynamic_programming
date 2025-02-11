@@ -18,3 +18,4 @@ if [ -n "$MODIFIED_FILES" ]; then
 else
   echo "No files found to commit."
 fi
+
