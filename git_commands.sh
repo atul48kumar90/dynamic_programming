@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Get the list of modified (staged and unstaged) files
+# Get the list of modified (staged and unstaged) files, including untracked files
 MODIFIED_FILES=$(git status -s | grep -E '^\s*[AM]' | awk '{print $2}' | tr '\n' ' ')
 
 # If there are modified or untracked files
@@ -9,7 +9,9 @@ if [ -n "$MODIFIED_FILES" ]; then
   git add .
 
   # Commit with the modified/untracked files as the commit message
-  git commit -m "Files changed: $MODIFIED_FILES"
+  COMMIT_MESSAGE="Files changed: $(echo "$MODIFIED_FILES" | sed 's/ /, /g')"
+
+  git commit -m "$COMMIT_MESSAGE"
 
   # Push changes to the remote repository
   git push
